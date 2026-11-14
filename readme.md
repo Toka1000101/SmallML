@@ -1,4 +1,4 @@
-# SmallML - SML like small pgoramming language
+# SmallML - SML like small proramming language
 ### Commands
 ##### Generate files - for this run `./compile.sh`
     - javacc ProjLang.jj
