@@ -1,0 +1,9 @@
+let val x = 3 in
+    let val y = 4 in
+        {
+            x := x + y;
+            y := x * 2;
+            x + y
+        }
+    end
+end;

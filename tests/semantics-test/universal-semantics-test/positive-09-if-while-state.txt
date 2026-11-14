@@ -1,0 +1,8 @@
+let val x = 10 in
+    {
+        while x < 20 do {
+            if x < 15 then x := x + 2 else x := x + 3
+        };
+        x
+    }
+end;

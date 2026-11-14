@@ -1,0 +1,3 @@
+let fun add(x) = x + 1 in
+    add(5)
+end;

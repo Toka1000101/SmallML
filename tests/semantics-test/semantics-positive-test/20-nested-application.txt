@@ -1,0 +1,5 @@
+let fun add(a) = a + 1 in
+    let fun twice(b) = add(add(b)) in
+        twice(5)
+    end
+end;

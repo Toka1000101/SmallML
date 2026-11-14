@@ -1,0 +1,19 @@
+let val a = 2 in
+    let val b = 3 in
+        let fun compute(n) =
+            if n < 0 then 0
+            else if n = 0 then 1
+            else n * compute(n - 1)
+        in
+            {
+                a := a + b;
+                b := a * b;
+                if (a < b) & (b < 20) then
+                    a := a + compute(3)
+                else
+                    b := 0;
+                a + b
+            }
+        end
+    end
+end;

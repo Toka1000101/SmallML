@@ -1,0 +1,5 @@
+let val x = 1 in
+    while x & true do {
+        x := 0
+    }
+end;

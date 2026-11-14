@@ -1,0 +1,7 @@
+let val x = 0 in
+    {
+        x := 1;
+        x := x + true;
+        x
+    }
+end;

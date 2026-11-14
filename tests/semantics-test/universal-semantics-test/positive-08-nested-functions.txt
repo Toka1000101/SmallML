@@ -1,0 +1,7 @@
+let fun add(a) = a + 1 in
+    let fun twice(b) = add(add(b)) in
+        let fun quadruple(c) = twice(twice(c)) in
+            quadruple(5)
+        end
+    end
+end;

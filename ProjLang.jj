@@ -1,0 +1,166 @@
+/* JavaCC file for CSC 8310 project language */
+// Do not modify the options below.
+options {
+    OUTPUT_DIRECTORY = "output";
+    LOOKAHEAD = 2;
+    FORCE_LA_CHECK = true;
+    STATIC = false;
+}
+
+// Do not change the name of parser/class below.
+PARSER_BEGIN(ProjLangParser)
+
+public class ProjLangParser {
+      // Do not add anything here.
+      // Generated parser code gets inserted here.
+      // Use the supplied ParseMain.java to invoke the parser.
+}
+
+PARSER_END(ProjLangParser)
+
+// Add your lexer rules here below this line.
+SKIP: {
+ " " | "\t" | "\n" | "\r"
+}
+TOKEN: {
+	<IF: "if"> | 
+	<THEN: "then">|
+	<ELSE: "else">|
+	<SEMI: ";">|
+	<LET: "let">|
+	<VAL: "val">|
+	<FUN: "fun">|
+	<ASSIGN: ":="> |
+	<EQUALS: "="> |
+	<IN: "in">|
+	<END: "end">|
+	<WHILE: "while"> |
+	<DO: "do"> |
+	<LCB: "{"> |
+	<RCB: "}"> |
+	<LB: "("> |
+	<RB: ")"> |
+	<NOT: "!"> |	
+	<TRUE: "true"> |
+	<FALSE: "false"> |
+	<ADDOP: "+" | "-" | "|"> |
+	<MULOP: "*" | "/" | "&"> |
+	<RELOP: "<"> |
+	<NUM: (["0"-"9"])+ > |
+	<ID: ["a"-"z", "A"-"Z"] (["a"-"z", "A"-"Z", "0"-"9"])*>
+}
+
+// Complete the rule for input() below. 
+// Add rest of the parser rules following it.
+// Complete the rule and do not change the return type.
+
+Expr input(): { Expr e; } {
+    e = expr() <SEMI> <EOF> { return e; }
+}
+
+// Add rest of the parser rules here below this line.
+Expr expr(): { Expr e; } {
+	e = ifExp() { return e; } |
+	e = letValExp() { return e; } |
+	e = letFunExp() { return e; } |
+	e = whileExp() { return e; } |
+	e = seqExp() { return e; } |
+	e = assnExp() { return e; } |
+	e = notExp() { return e; } |
+	e = relExp() { return e; }
+}
+
+Expr ifExp(): { Expr cond, thenExpr, elseExpr; } {
+    <IF> cond = expr() <THEN> thenExpr = expr() <ELSE> elseExpr = expr()
+    { return new IfExp(cond, thenExpr, elseExpr); }
+}
+
+Expr letValExp(): { Token id; Expr boundExpr, body; } {
+	<LET> <VAL> id = <ID> <EQUALS> boundExpr = expr() <IN> body = expr() <END>
+	{ return new LetValExp(id.image, boundExpr, body); }
+}
+
+Expr letFunExp(): { Token funName, argName; Expr funBody, body; } {
+	<LET> <FUN> funName = <ID> <LB> argName = <ID> <RB> <EQUALS>
+	funBody = expr() <IN> body = expr() <END>
+	{ return new LetFunExp(funName.image, argName.image, funBody, body); }
+}
+
+Expr whileExp(): { Expr cond, body; } {
+	<WHILE> cond = expr() <DO> body = expr()
+	{ return new WhileExp(cond, body); }
+}
+
+Expr seqExp(): { Expr first, next; } {
+	<LCB> first = expr()
+	( <SEMI> next = expr() { first = new SeqExp(first, next); } )*
+	<RCB>
+	{ return first; }
+}
+
+Expr notExp(): { Expr arg; } {
+	<NOT> arg = expr()
+	{ return new NotExp(arg); }
+}
+
+Expr assnExp(): { Token id; Expr rhs; } {
+	id = <ID> <ASSIGN> rhs = expr()
+	{ return new AssnExp(id.image, rhs); }
+}
+
+Expr relExp(): { Expr left, right; BinOp op; } {
+	left = arithExp()
+	(
+		( <RELOP> { op = BinOp.LT; } | <EQUALS> { op = BinOp.EQ; } )
+		right = arithExp()
+		{ left = new BinExp(op, left, right); }
+	)?
+	{ return left; }
+}
+
+Expr arithExp(): { Expr left, right; Token op; } {
+	left = term()
+	(
+		op = <ADDOP> right = term()
+		{
+			if (op.image.equals("+"))
+				left = new BinExp(BinOp.PLUS, left, right);
+			else if (op.image.equals("-"))
+				left = new BinExp(BinOp.MINUS, left, right);
+			else
+				left = new BinExp(BinOp.OR, left, right);
+		}
+	)*
+	{ return left; }
+}
+
+Expr term(): { Expr left, right; Token op; } {
+	left = factor()
+	(
+		op = <MULOP> right = factor()
+		{
+			if (op.image.equals("*"))
+				left = new BinExp(BinOp.TIMES, left, right);
+			else if (op.image.equals("/"))
+				left = new BinExp(BinOp.DIV, left, right);
+			else
+				left = new BinExp(BinOp.AND, left, right);
+		}
+	)*
+	{ return left; }
+}
+
+Expr factor(): { Token id; Expr arg; } {
+	<NUM> { return new IntConst(Integer.parseInt(token.image)); }
+	|
+	<TRUE> { return new BoolConst(true); }
+	|
+	<FALSE> { return new BoolConst(false); }
+	|
+	LOOKAHEAD(2) id = <ID> <LB> arg = expr() <RB>
+	{ return new AppExp(id.image, arg); }
+	|
+	id = <ID> { return new VarExp(id.image); }
+	|
+	<LB> arg = expr() <RB> { return arg; }
+}

@@ -1,0 +1,10 @@
+let val base = 10 in
+    let fun addBase(n) = base + n in
+        let val base = 100 in
+            {
+                base := base + 1;
+                addBase(base)
+            }
+        end
+    end
+end;

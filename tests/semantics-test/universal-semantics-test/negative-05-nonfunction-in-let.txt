@@ -1,0 +1,5 @@
+let val value = 42 in
+    let fun use(f) = f(1) in
+        use(value)
+    end
+end;

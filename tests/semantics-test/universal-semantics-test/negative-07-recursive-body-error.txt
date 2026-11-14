@@ -1,0 +1,6 @@
+let fun bad(n) =
+    if n = 0 then true + 1
+    else bad(n - 1)
+in
+    bad(2)
+end;

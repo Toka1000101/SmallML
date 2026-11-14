@@ -1,0 +1,8 @@
+let fun testIf(n) =
+	if n < 0
+		0
+	else
+		1
+in
+	testIf(5)
+end;

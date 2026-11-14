@@ -1,0 +1,5 @@
+let val x = 7 in
+    let val y = x * 3 in
+        x + y
+    end
+end;

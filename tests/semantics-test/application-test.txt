@@ -1,0 +1,5 @@
+let 
+	val x = 2
+in
+	x(5)
+end;

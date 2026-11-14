@@ -1,0 +1,8 @@
+let val x = 0 in
+    {
+        while x < 8 do {
+            x := x + 2
+        };
+        if x = 8 then x * 2 else x + 1
+    }
+end;

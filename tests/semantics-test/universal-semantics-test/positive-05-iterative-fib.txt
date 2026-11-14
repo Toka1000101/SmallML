@@ -1,0 +1,22 @@
+let fun fib(n) =
+    let val a = 0 in
+        let val b = 1 in
+            let val i = 1 in
+                {
+                    while i < n do {
+                        let val next = a + b in
+                            {
+                                a := b;
+                                b := next;
+                                i := i + 1
+                            }
+                        end
+                    };
+                    b
+                }
+            end
+        end
+    end
+in
+    fib(7)
+end;

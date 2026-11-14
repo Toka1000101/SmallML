@@ -1,0 +1,3 @@
+let fun addOne(n) = n + 1 in
+    addOne(41)
+end;

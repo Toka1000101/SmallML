@@ -1,0 +1,15 @@
+let fun pow2(n) =
+    let val result = 1 in
+        let val i = 0 in
+            {
+                while i < n do {
+                    result := result * 2;
+                    i := i + 1
+                };
+                result
+            }
+        end
+    end
+in
+    pow2(6)
+end;

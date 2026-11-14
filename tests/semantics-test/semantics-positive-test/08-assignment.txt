@@ -1,0 +1,6 @@
+let val x = 1 in
+    {
+        x := 12;
+        x
+    }
+end;

@@ -1,0 +1,7 @@
+let val x = 10 in
+    let fun f(y) = x + y in
+        let val x = 1 in
+            f(2)
+        end
+    end
+end;

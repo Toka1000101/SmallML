@@ -1,0 +1,3 @@
+let fun divide(n) = 100 / (n - n) in
+    divide(5)
+end;

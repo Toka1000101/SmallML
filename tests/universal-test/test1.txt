@@ -1,0 +1,13 @@
+let val x = 10 in
+  let val y = 20 in
+    let fun add(a) = a + 5 in
+      {
+        x := x + 1;
+        while x < 15 do {
+          x := x + 1
+        };
+        if x = 15 then true else false
+      }
+    end
+  end
+end;

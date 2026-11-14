@@ -1,0 +1,11 @@
+let val flag = true in
+    let val count = 0 in
+        {
+            while count < 4 do {
+                flag := !flag;
+                count := count + 1
+            };
+            if flag & (count = 4) then 1 else 0
+        }
+    end
+end;
